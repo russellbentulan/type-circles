@@ -52,6 +52,9 @@ $(function(){
             }
         }
 
+        // Listen for keypresses
+        // Match letters for points
+        // Match word to move to next step
         typeCircles.answer.on('keyup', function() {
             answer = $(this).val();
             matchLetters(answer);

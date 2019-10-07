@@ -70,3 +70,58 @@ h3 {
 #title {
     cursor: default;
 }
+
+#circles {
+    position: relative;
+    width: 100%;
+    height: 20rem;
+    margin: 0 auto;
+}
+
+.circle {
+    width: 10rem;
+    height: 10rem;
+    border: 5px solid mediumaquamarine;
+    border-radius: 50%;
+    background-color: aquamarine;
+    display: inline-block;
+    transform: translateX(-50%);
+    position: absolute;
+    transition: all 1.5s ease-out;
+}
+
+.circle:hover {
+    cursor: pointer;
+}
+
+.circle::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(1.25);
+    background-color: maroon;
+    opacity: 0;
+    transition: all 1s ease-out;
+    transition-delay: 2s;
+}
+
+.game-pause .winner::after {
+    opacity: .7;
+}
+
+.circle-left {
+    transform: translateX(-200%);
+    z-index: 1;
+}
+
+.circle-mid {
+    transform: transelateX(-50%);
+    z-index: 2;
+}
+
+.circle-right {
+    transform: translateX(100%);
+    z-index: 3;
+}
