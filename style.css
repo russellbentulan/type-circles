@@ -24,7 +24,7 @@ button:hover {
 
 .wrapper {
     width: 90vw;
-    height: 80vh;
+    height: 90vh;
     margin: 5vw;
     padding: 5rem;
     background-color: blanchedalmond;
@@ -79,8 +79,8 @@ h3 {
 }
 
 .circle {
-    width: 10rem;
-    height: 10rem;
+    width: 8em;
+    height: 8em;
     border: 5px solid mediumaquamarine;
     border-radius: 50%;
     background-color: aquamarine;
