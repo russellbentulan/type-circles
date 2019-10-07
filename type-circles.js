@@ -30,9 +30,32 @@ $(function(){
         typeCircles.checkAnswer(newWord);
     };
 
+    // Update scoring
+    typeCircles.updateScore = (points) => {
+        typeCircles.currentScore += points;
+        typeCircles.score.text(typeCircles.currentScore);
+    }
+
     // Listen to user input
     typeCircles.checkAnswer = (word) => {
+        wordLetters = word.split("");
+        lettersMatched = 0;
+
+        // Check matching letters
+        // Make sure letters can't give points twice
+        const matchLetters = (answerLetters) => {
+            if (wordLetters[lettersMatched] === answerLetters[lettersMatched]) {
+                wordLetters[lettersMatched] = "answered";
+                lettersMatched++
+                console.log(answerLetters);
+                typeCircles.updateScore(10);
+            }
+        }
+
         typeCircles.answer.on('keyup', function() {
+            answer = $(this).val();
+            matchLetters(answer);
+
             if (word.toUpperCase() === $(this).val().toUpperCase()) {
                 $(this).val('');
                 typeCircles.word.text('');
