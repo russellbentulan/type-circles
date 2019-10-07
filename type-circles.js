@@ -53,13 +53,12 @@ $(function(){
 
         if ( circleCount === 1 ) {
             circle.addClass("winner");
-        } else {
-            circle.addClass("not-winner");
         }
 
         // Prevent page refresh on button click
         circle.on('click', function(e) {
             e.preventDefault();
+            console.log($(this).hasClass("winner"));
         });
 
         // Add position data for each circle object
@@ -68,11 +67,10 @@ $(function(){
     };
 
     // Place circles into first positions
-    // Prevent default
     typeCircles.initialPositions = () => {
         $('.circle').each(function(index) {
             index++;
-            $(this).addClass(`circle--${index}`);
+            $(this).addClass(`circle--p${index}`);
         });
     };
 
@@ -160,8 +158,6 @@ $(function(){
 
     // Set score
     typeCircles.score.text(typeCircles.currentScore);
-
-    // Prevent default
     
 
     // Hide instructions
