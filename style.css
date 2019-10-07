@@ -7,6 +7,7 @@
 
 body {
     font-size: inherit;
+    font-family: 'Baloo', cursive;
 }
 
 *,
@@ -14,8 +15,33 @@ body {
 *:after {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 button:hover {
     cursor: pointer;
+}
+
+.wrapper {
+    width: 90vw;
+    height: 80vh;
+    margin: 5vw;
+    padding: 5rem;
+    background-color: blanchedalmond;
+    text-align: center;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+#user-answer {
+    font-size: 3rem;
+    padding: 2rem;
+    border: 5px solid rgba(0,0,0,.6);
+    margin: 2rem;
 }

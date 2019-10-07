@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">    
     <link rel="stylesheet" href="style.css">
     <title>Type Circles</title>
 </head>
 <body>
-    <header>
-        <h1>Type Circles</h1>
-    </header>
-    <main id="game-container">
-        <h2>Start typing to begin</h2>
-        <form class="type-game">
-            <label>
-                <h3 id="answer"></h3>
-                <input type="text" id="user-answer">
-            </label>
-        <form>
-        <section id="circles">
+    <div class="wrapper">
+        <header>
+            <h1 id="title">Type Circles</h1>
+        </header>
+        <main id="game-container">
+            <h2 id="instructions">Start typing to begin</h2>
+            <form class="type-game">
+                <label>
+                    <h3 id="answer"></h3>
+                    <input type="text" id="user-answer">
+                </label>
+            <form>
+            <section id="circles">
 
-        </section>
-    </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-    <script src="./type-circles.js"></script>
+            </section>
+        </main>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+        <script src="./type-circles.js"></script>
+    </div>
 </body>
 </html>
