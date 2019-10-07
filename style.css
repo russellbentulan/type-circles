@@ -35,8 +35,15 @@ h1 {
     font-size: 4rem;
 }
 
-h2 {
+h3 {
     font-size: 2rem;
+}
+
+#word {
+    font-size: 5rem;
+    transition: .5s all;
+    text-transform: uppercase;
+    margin-bottom: -2rem;
 }
 
 #user-answer {
@@ -44,4 +51,10 @@ h2 {
     padding: 2rem;
     border: 5px solid rgba(0,0,0,.6);
     margin: 2rem;
+    max-width: 90%;
+}
+
+#instructions,
+#title {
+    cursor: default;
 }
