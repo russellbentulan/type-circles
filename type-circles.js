@@ -8,6 +8,9 @@ $(function(){
     // Log user score
     typeCircles.currentScore = 0;
 
+    // Log a variable for speed of the game
+    typeCircles.gameSpeed = 2000;
+
     // All words (200 should be enough)
     typeCircles.words = ["juno", "surround", "install", "narrow", "constraint", "craftsman", "album", "extent", "carriage", "colon", "landscape", "software", "kettle", "default", "constant", " borrow", "couple", "common", "debut", "absorb", "employ", "basket", "physics", "command", "trouser", "surprise", "doctor", "pioneer", "presence", "handy", "cluster", "decade", "oven", "descent", "publish", "singer", "fossil", "quarrel", "mirror", "balance", "bubble", "promote", "dollar", "sweater", "support", "speaker", "cottage", "powder", "engine", "stubborn", "video", "replace", "reduce", "dairy", "waiter", "accept", "pile", "valid", "final", "ribbon", "favor", "poetry", "scatter", "applaud", "army", "marine", "fraction", "vague", "plastic", "fiction", "mourning", "summer", "construct", "pupil", "suppress", "bathroom", "eaux", "topple", "confine", "export", "feather", "patrol", "nonsense", "standard", "knowledge", "discreet", "pepper", "medal", "lemon", "profound", "proclaim", "leader", "studio", "cabin", "moving", "present", "distort", "discuss", "crystal", "painter", "behave", "entry", "fragrant", "season", "jelly", "discount", "rumor", "bracket", "morning", "earwax", "master", "secure", "latest", "surface", "symbol", "fever", "fixture", "future", "wander", "funny", "freckle", "rebel", "reinforce", "award", "volume", "failure", "apple", "audience", "earthwax", "elapse", "pocket", "navy", "dribble", "piano", "bundle", "expect", "football", "notion", "payment", "spirit", "angle", "castle", "dictate", "sale", "confront", "addicted", "pursuit", "kidnap", "detail", "hover", "thesis", "reverse", "healthy", "relate", "idea", "lesson", "behead", "problem", "applied", "bargain", "echo", "damage", "charter", "perfume", "receipt", "finger", "whole", "portrait", "concern", "ensure", "monster", "social", "rabbit", "even", "warrant", "bury", "journal", "belong", "player", "debate", "hero", "lineage", "sequence", "revoke", "lily", "reward", "sister", "flatware", "feeling", "ethics", "basic", "junior", "control", "agree", "muggy", "looting", "justice", "driver", "linen", "undress"];
 
@@ -80,11 +83,23 @@ $(function(){
         typeCircles.circleContainer.append(circle);
     };
 
+    // Move a circle jQuery object laterally
+    typeCircles.moveCircle = (circle, direction) => {
+        const positions = {
+            left: 0,
+            middle: "50%",
+            right: "100%"
+        };
+
+        circle.animate( {left: positions[direction]}, typeCircles.gameSpeed);
+    };
+
     // Place circles into first positions
     typeCircles.initialPositions = () => {
-        $('.circle').each(function(index) {
-            index++;
-            $(this).addClass(`circle--p${index}`);
+        positions = ["left", "middle", "right"];
+        $('.circle').each(function() {
+            typeCircles.moveCircle($(this), positions[0]);
+            positions.shift();
         });
     };
 
@@ -111,16 +126,19 @@ $(function(){
         let currentPositions = [];
         $('.circle').each(function () {
             $circle = $(this);
-            let classList = $(this).attr('class').split(' ');
 
             // Pull data from circle object
-            console.log(circle.data("position"));
+            console.log($circle.data());
 
-            $.each(classList, function(id, item) {
-                if (item.indexOf('circle--p') == 0) {
-                    $circle.removeClass(item);
-                }
-            });
+            // Remove existing position class
+
+
+            // let classList = $(this).attr('class').split(' ');
+            // $.each(classList, function(id, item) {
+            //     if (item.indexOf('circle--p') == 0) {
+            //         $circle.removeClass(item);
+            //     }
+            // });
         });
     };
 
