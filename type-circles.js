@@ -59,8 +59,9 @@ $(function(){
             typeCircles.changeWord();
             $('.can-score').removeClass('can-score');
             typeCircles.answer.focus();
+            typeCircles.playingGame = true;
         } else {
-
+            alert("Wrong circle!")
         }
     };
 
@@ -83,7 +84,6 @@ $(function(){
             e.preventDefault();
             winningCondition = $(this).hasClass("can-score");
             typeCircles.clearLevel(winningCondition);
-            
         });
 
         typeCircles.circleContainer.append(circle);
@@ -100,20 +100,6 @@ $(function(){
         circle.animate( {left: positions[direction]}, typeCircles.gameSpeed);
     };
 
-    // Shuffle the global positions
-    // Set new position of each circle
-    typeCircles.shuffleCircles = () => {
-        tempPosition = typeCircle.currentPositions[totalCircles];
-        typeCircle.currentPositions[totalCircles] = typeCircle.currentPositions[randomPosition];
-        typeCircle.currentPositions[randomPosition] = temporaryPosition;
-
-        typeCircle.currentPositions.forEach(function(position) {
-
-        });
-
-        addCirclePositions();
-    };
-
     // Set the circle to the first position in the positions array
     // Move the first element in the positions array to the back
     typeCircles.addCirclePositions = () => {
@@ -124,10 +110,31 @@ $(function(){
         });
     };
 
+    // Shuffle the global positions
+    // Set new position of each circle
+    typeCircles.shuffleCircles = () => {
+        const totalCircles = typeCircles.circles.length;
+
+        for (let i = totalCircles - 1; i > 0; i-- ) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [typeCircles.currentPositions[i], typeCircles.currentPositions[j]] = [typeCircles.currentPositions[j], typeCircles.currentPositions[i]];
+        };
+
+        typeCircles.addCirclePositions();
+    };
+
+    typeCircles.shuffleLoop = () => {
+        typeCircles.shuffleCircles();
+        if (typeCircles.playingGame) {
+            setTimeout(typeCircles.shuffleLoop, typeCircles.gameSpeed);
+        }   
+    };
+
     // Change game state to playing
     typeCircles.startGame = () => {
         typeCircles.playingGame = true;
         typeCircles.gameContainer.removeClass('game-pause');
+        typeCircles.shuffleLoop();
     };
 
     // End the game when the wrong circle is clicked
@@ -166,29 +173,31 @@ $(function(){
         });
     };
 
-    // Clear initial answer input
-    typeCircles.answer.val('');
-
-    // Set score
-    typeCircles.score.text(typeCircles.currentScore);
+    typeCircles.init = () => {
+        // Clear answer input
+        typeCircles.answer.val('');
     
+        // Set score to 0
+        typeCircles.score.text(typeCircles.currentScore)
 
-    // Hide instructions
-    // Change the title to a word
-    // Start the game
-    typeCircles.answer.one('focus', function() {
-        $('#instructions').animate({ opacity: 0 });
-        typeCircles.word.attr('id', 'word');
-        newWord = typeCircles.randomWord()[0];
-        typeCircles.word.text(newWord);
-        typeCircles.checkAnswer(newWord);
-        typeCircles.startGame();
-    });
+        // Hide instructions
+        // Change the title to a word
+        // Start the game
+        typeCircles.answer.one('focus', function() {
+            $('#instructions').animate({ opacity: 0 });
+            typeCircles.word.attr('id', 'word');
+            newWord = typeCircles.randomWord()[0];
+            typeCircles.word.text(newWord);
+            typeCircles.checkAnswer(newWord);
+            typeCircles.startGame();
+        });
 
-    // Add 3 circles to DOM
-    // Initial animation
-    typeCircles.addCircle();
-    typeCircles.addCircle();
-    typeCircles.addCircle();
-    setTimeout(typeCircles.addCirclePositions, 500);
+        // Add 3 circles to DOM
+        // Initial animation
+        typeCircles.addCircle();
+        typeCircles.addCircle();
+        typeCircles.addCircle();
+        setTimeout(typeCircles.addCirclePositions, 500);
+    };
+    typeCircles.init();
 });
