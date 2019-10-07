@@ -42,6 +42,18 @@ $(function(){
         typeCircles.score.text(typeCircles.currentScore);
     }
 
+    // Change the word and add points if the right circle was clicked
+    // Prevent button default
+    // End the game if the wrong circle was clicked
+    // Reset the game
+    typeCircles.clearLevel = (winCondition) => {
+        if (winCondition && typeCircles.playingGame) {
+            typeCircles.updateScore(50);
+        } else {
+
+        }
+    };
+
     // Create a circle and log the total
     // Add new circle to the DOM
     // Make the first circle the winner
@@ -56,9 +68,11 @@ $(function(){
         }
 
         // Prevent page refresh on button click
+        // Check if the clicked circle has the win condition
         circle.on('click', function(e) {
             e.preventDefault();
-            console.log($(this).hasClass("winner"));
+            winningCondition = $(this).hasClass("winner");
+            typeCircles.clearLevel(winningCondition);
         });
 
         // Add position data for each circle object

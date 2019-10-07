@@ -8,6 +8,7 @@
 body {
     font-size: inherit;
     font-family: 'Baloo', cursive;
+    color: #363795;
 }
 
 *,
@@ -27,7 +28,7 @@ button:hover {
     height: 90vh;
     margin: 5vw;
     padding: 5rem;
-    background-color: blanchedalmond;
+    background: linear-gradient(to bottom right, #CFDEF3, #E0EAFC);
     text-align: center;
 }
 
@@ -61,7 +62,7 @@ h3 {
 #user-answer {
     font-size: 3rem;
     padding: 2rem;
-    border: 5px solid rgba(0,0,0,.6);
+    border: 5px solid #363795;
     margin: 2rem;
     max-width: 90%;
 }
@@ -81,9 +82,9 @@ h3 {
 .circle {
     width: 8em;
     height: 8em;
-    border: 5px solid mediumaquamarine;
+    border: 5px solid #005C97;
     border-radius: 50%;
-    background-color: aquamarine;
+    background-color: #C4E0E5;
     display: inline-block;
     transform: translateX(-50%);
     position: absolute;
@@ -101,7 +102,7 @@ h3 {
     height: 100%;
     border-radius: 50%;
     transform: scale(1.25);
-    background-color: maroon;
+    background-color: #8E0E00;
     opacity: 0;
     transition: all 1s ease-out;
     transition-delay: 2s;
