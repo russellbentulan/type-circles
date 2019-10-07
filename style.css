@@ -46,6 +46,18 @@ h3 {
     margin-bottom: -2rem;
 }
 
+#word-container {
+    position: relative;
+}
+
+#user-score {
+    position: absolute;
+    right: 0;
+    top: -2.5rem;
+    font-size: 1.5rem;
+    text-align: right;
+}
+
 #user-answer {
     font-size: 3rem;
     padding: 2rem;
