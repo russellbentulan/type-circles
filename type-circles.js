@@ -5,9 +5,6 @@ $(function(){
     // Create a play state for the game
     typeCircles.playingGame = null;
 
-    // State allowing points to be scored
-    typeCircles.canScore = false;
-
     // Log user score
     typeCircles.currentScore = 0;
 
@@ -48,11 +45,8 @@ $(function(){
     // Update scoring
     // Only allow for points to be scored once
     typeCircles.updateScore = (points) => {
-        if (canScore) {
-            typeCircles.currentScore += points;
-            typeCircles.score.text(typeCircles.currentScore);
-            canScore = false;
-        }
+        typeCircles.currentScore += points;
+        typeCircles.score.text(typeCircles.currentScore);
     }
 
     // Change the word and add points if the right circle was clicked
@@ -60,8 +54,11 @@ $(function(){
     // End the game if the wrong circle was clicked
     // Reset the game
     typeCircles.clearLevel = (winCondition) => {
-        if (winCondition && typeCircles.playingGame) {
+        if (winCondition) {
             typeCircles.updateScore(50);
+            typeCircles.changeWord();
+            $('.can-score').removeClass('can-score');
+            typeCircles.answer.focus();
         } else {
 
         }
@@ -84,8 +81,9 @@ $(function(){
         // Check if the clicked circle has the win condition
         circle.on('click', function(e) {
             e.preventDefault();
-            winningCondition = $(this).hasClass("winner");
+            winningCondition = $(this).hasClass("can-score");
             typeCircles.clearLevel(winningCondition);
+            
         });
 
         typeCircles.circleContainer.append(circle);
@@ -130,7 +128,6 @@ $(function(){
     typeCircles.startGame = () => {
         typeCircles.playingGame = true;
         typeCircles.gameContainer.removeClass('game-pause');
-        canScore = true;
     };
 
     // End the game when the wrong circle is clicked
@@ -150,7 +147,6 @@ $(function(){
             if (wordLetters[lettersMatched] === answerLetters[lettersMatched]) {
                 wordLetters[lettersMatched] = "answered";
                 lettersMatched++;
-                canScore = true;
                 typeCircles.updateScore(10);
             }
         }
@@ -165,8 +161,7 @@ $(function(){
             // If words match stop the shuffle
             if (word.toUpperCase() === $(this).val().toUpperCase()) {
                 $(this).val('');
-                typeCircles.word.text('');
-                typeCircles.changeWord();
+                $('.winner').addClass('can-score');
             }
         });
     };
