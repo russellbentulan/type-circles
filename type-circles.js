@@ -78,8 +78,6 @@ $(function(){
             typeCircles.clearLevel(winningCondition);
         });
 
-        // Add position data for each circle object
-        circle.data("position", circleCount);
         typeCircles.circleContainer.append(circle);
     };
 
@@ -126,19 +124,6 @@ $(function(){
         let currentPositions = [];
         $('.circle').each(function () {
             $circle = $(this);
-
-            // Pull data from circle object
-            console.log($circle.data());
-
-            // Remove existing position class
-
-
-            // let classList = $(this).attr('class').split(' ');
-            // $.each(classList, function(id, item) {
-            //     if (item.indexOf('circle--p') == 0) {
-            //         $circle.removeClass(item);
-            //     }
-            // });
         });
     };
 
