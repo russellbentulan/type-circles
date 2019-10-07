@@ -9,7 +9,7 @@ $(function(){
     typeCircles.currentScore = 0;
 
     // Log a variable for speed of the game
-    typeCircles.gameSpeed = 2000;
+    typeCircles.gameSpeed = 1600;
 
     // All words (200 should be enough)
     typeCircles.words = ["juno", "surround", "install", "narrow", "constraint", "craftsman", "album", "extent", "carriage", "colon", "landscape", "software", "kettle", "default", "constant", " borrow", "couple", "common", "debut", "absorb", "employ", "basket", "physics", "command", "trouser", "surprise", "doctor", "pioneer", "presence", "handy", "cluster", "decade", "oven", "descent", "publish", "singer", "fossil", "quarrel", "mirror", "balance", "bubble", "promote", "dollar", "sweater", "support", "speaker", "cottage", "powder", "engine", "stubborn", "video", "replace", "reduce", "dairy", "waiter", "accept", "pile", "valid", "final", "ribbon", "favor", "poetry", "scatter", "applaud", "army", "marine", "fraction", "vague", "plastic", "fiction", "mourning", "summer", "construct", "pupil", "suppress", "bathroom", "eaux", "topple", "confine", "export", "feather", "patrol", "nonsense", "standard", "knowledge", "discreet", "pepper", "medal", "lemon", "profound", "proclaim", "leader", "studio", "cabin", "moving", "present", "distort", "discuss", "crystal", "painter", "behave", "entry", "fragrant", "season", "jelly", "discount", "rumor", "bracket", "morning", "earwax", "master", "secure", "latest", "surface", "symbol", "fever", "fixture", "future", "wander", "funny", "freckle", "rebel", "reinforce", "award", "volume", "failure", "apple", "audience", "earthwax", "elapse", "pocket", "navy", "dribble", "piano", "bundle", "expect", "football", "notion", "payment", "spirit", "angle", "castle", "dictate", "sale", "confront", "addicted", "pursuit", "kidnap", "detail", "hover", "thesis", "reverse", "healthy", "relate", "idea", "lesson", "behead", "problem", "applied", "bargain", "echo", "damage", "charter", "perfume", "receipt", "finger", "whole", "portrait", "concern", "ensure", "monster", "social", "rabbit", "even", "warrant", "bury", "journal", "belong", "player", "debate", "hero", "lineage", "sequence", "revoke", "lily", "reward", "sister", "flatware", "feeling", "ethics", "basic", "junior", "control", "agree", "muggy", "looting", "justice", "driver", "linen", "undress"];
@@ -61,7 +61,8 @@ $(function(){
             typeCircles.answer.focus();
             typeCircles.playingGame = true;
         } else {
-            alert("Wrong circle!")
+            alert("Wrong circle!");
+            typeCircles.stopGame();
         }
     };
 
@@ -89,22 +90,29 @@ $(function(){
         typeCircles.circleContainer.append(circle);
     };
 
-    // Move a circle jQuery object laterally
+    // Move a circle laterally
     typeCircles.moveCircle = (circle, direction) => {
         const positions = {
             left: 0,
             middle: "50%",
             right: "100%"
         };
-
         circle.animate( {left: positions[direction]}, typeCircles.gameSpeed);
     };
 
     // Set the circle to the first position in the positions array
     // Move the first element in the positions array to the back
+    // Add the z-index for each position
     typeCircles.addCirclePositions = () => {
+        const zIndex = {
+            left: 1,
+            middle: 2,
+            right: 3
+        }
         $('.circle').each(function() {
-            typeCircles.moveCircle($(this), typeCircles.currentPositions[0]);
+            let position = typeCircles.currentPositions[0];
+            typeCircles.moveCircle($(this), position);
+            $(this).css("z-index", zIndex[position]);
             usedPosition = typeCircles.currentPositions.shift();
             typeCircles.currentPositions.push(usedPosition);
         });
@@ -123,6 +131,7 @@ $(function(){
         typeCircles.addCirclePositions();
     };
 
+    // Loop the shuffle function when the game is playing
     typeCircles.shuffleLoop = () => {
         typeCircles.shuffleCircles();
         if (typeCircles.playingGame) {
@@ -138,7 +147,7 @@ $(function(){
     };
 
     // End the game when the wrong circle is clicked
-    typeCircles.endGame = () => {
+    typeCircles.stopGame = () => {
         typeCircles.playingGame = false;
         typeCircles.gameContainer.addClass('game-pause');
     };
