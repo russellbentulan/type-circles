@@ -5,6 +5,9 @@ $(function(){
     // Create a play state for the game
     typeCircles.playingGame = null;
 
+    // State allowing points to be scored
+    typeCircles.canScore = false;
+
     // Log user score
     typeCircles.currentScore = 0;
 
@@ -16,6 +19,9 @@ $(function(){
 
     // Keep track of all circles
     typeCircles.circles = [];
+
+    // Keep track of all positions
+    typeCircles.currentPositions = ["left", "middle", "right"];
 
     // Caching multi-use selectors
     typeCircles.gameContainer = $('#game-container');
@@ -40,9 +46,13 @@ $(function(){
     };
 
     // Update scoring
+    // Only allow for points to be scored once
     typeCircles.updateScore = (points) => {
-        typeCircles.currentScore += points;
-        typeCircles.score.text(typeCircles.currentScore);
+        if (canScore) {
+            typeCircles.currentScore += points;
+            typeCircles.score.text(typeCircles.currentScore);
+            canScore = false;
+        }
     }
 
     // Change the word and add points if the right circle was clicked
@@ -92,38 +102,27 @@ $(function(){
         circle.animate( {left: positions[direction]}, typeCircles.gameSpeed);
     };
 
-    // Place circles into first positions
-    typeCircles.initialPositions = () => {
-        positions = ["left", "middle", "right"];
-        $('.circle').each(function() {
-            typeCircles.moveCircle($(this), positions[0]);
-            positions.shift();
+    // Shuffle the global positions
+    // Set new position of each circle
+    typeCircles.shuffleCircles = () => {
+        tempPosition = typeCircle.currentPositions[totalCircles];
+        typeCircle.currentPositions[totalCircles] = typeCircle.currentPositions[randomPosition];
+        typeCircle.currentPositions[randomPosition] = temporaryPosition;
+
+        typeCircle.currentPositions.forEach(function(position) {
+
         });
+
+        addCirclePositions();
     };
 
-    // Shuffle the circles
-    typeCircles.shuffleCircles = (positions) => {
-        let totalCircles = typeCircles.circles.length;
-
-        while (totalCircles) {
-            // Randomize an index in the array and decrease the count
-            randomPosition = Math.floor(Math.random() * totalCircles);
-            totalCircles--;
-
-            // Swap the last element in the array with the random value
-            tempPosition = positions[totalCircles];
-            positions[totalCircles] = positions[randomPosition];
-            positions[randomPosition] = temporaryPosition;
-        }
-
-        return positions;
-    };
-
-    // Swap the current circle positions with new ones
+    // Set the circle to the first position in the positions array
+    // Move the first element in the positions array to the back
     typeCircles.addCirclePositions = () => {
-        let currentPositions = [];
-        $('.circle').each(function () {
-            $circle = $(this);
+        $('.circle').each(function() {
+            typeCircles.moveCircle($(this), typeCircles.currentPositions[0]);
+            usedPosition = typeCircles.currentPositions.shift();
+            typeCircles.currentPositions.push(usedPosition);
         });
     };
 
@@ -131,6 +130,7 @@ $(function(){
     typeCircles.startGame = () => {
         typeCircles.playingGame = true;
         typeCircles.gameContainer.removeClass('game-pause');
+        canScore = true;
     };
 
     // End the game when the wrong circle is clicked
@@ -150,6 +150,7 @@ $(function(){
             if (wordLetters[lettersMatched] === answerLetters[lettersMatched]) {
                 wordLetters[lettersMatched] = "answered";
                 lettersMatched++;
+                canScore = true;
                 typeCircles.updateScore(10);
             }
         }
@@ -194,5 +195,5 @@ $(function(){
     typeCircles.addCircle();
     typeCircles.addCircle();
     typeCircles.addCircle();
-    setTimeout(typeCircles.initialPositions, 500);
+    setTimeout(typeCircles.addCirclePositions, 500);
 });
