@@ -111,20 +111,6 @@ h3 {
     opacity: .7;
 }
 
-/* .circle--p1 {
-    transform: translateX(-200%);
-    left: 0;
-    z-index: 1;
+#score {
+    font-size: 1.8rem;
 }
-
-.circle--p2 {
-    transform: transelateX(-50%);
-    left: 50%;
-    z-index: 2;
-}
-
-.circle--p3 {
-    transform: translateX(100%);
-    left: 100%;
-    z-index: 3;
-} */
