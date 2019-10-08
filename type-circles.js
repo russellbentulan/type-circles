@@ -49,8 +49,9 @@ $(function(){
         typeCircles.score.text(typeCircles.currentScore);
     }
 
-    // Change the word and add points if the right circle was clicked
     // Prevent button default
+    // Change the word and add points if the right circle was clicked
+    // Set input background to white
     // End the game if the wrong circle was clicked
     // Reset the game
     typeCircles.clearLevel = (winCondition) => {
@@ -59,7 +60,8 @@ $(function(){
             typeCircles.changeWord();
             $('.can-score').removeClass('can-score');
             typeCircles.answer.focus();
-            typeCircles.playingGame = true;
+            typeCircles.answer.css("background", "white");
+            typeCircles.startGame();
         } else {
             alert("Wrong circle!");
             typeCircles.stopGame();
@@ -131,7 +133,7 @@ $(function(){
         typeCircles.addCirclePositions();
     };
 
-    // Loop the shuffle function when the game is playing
+    // Loop the shuffle function when the game is in playing state
     typeCircles.shuffleLoop = () => {
         typeCircles.shuffleCircles();
         if (typeCircles.playingGame) {
@@ -140,9 +142,9 @@ $(function(){
     };
 
     // Change game state to playing
+    // Start shuffling the circles
     typeCircles.startGame = () => {
         typeCircles.playingGame = true;
-        typeCircles.gameContainer.removeClass('game-pause');
         typeCircles.shuffleLoop();
     };
 
@@ -175,9 +177,18 @@ $(function(){
             matchLetters(answer);
 
             // If words match stop the shuffle
+            // Turn input background green
+            // Make winning button count for points
+            // Lower loop timing up to 200ms
             if (word.toUpperCase() === $(this).val().toUpperCase()) {
                 $(this).val('');
+                $(this).css("background", "#98f272");
+                typeCircles.playingGame = false;
                 $('.winner').addClass('can-score');
+
+                if (typeCircles.gameSpeed > 200) {
+                    typeCircles.gameSpeed -= 20;
+                }
             }
         });
     };
@@ -198,6 +209,7 @@ $(function(){
             newWord = typeCircles.randomWord()[0];
             typeCircles.word.text(newWord);
             typeCircles.checkAnswer(newWord);
+            typeCircles.gameContainer.removeClass('game-pause');
             typeCircles.startGame();
         });
 
